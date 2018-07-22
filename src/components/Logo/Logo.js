@@ -4,7 +4,8 @@ import classes from './Logo.css';
 
 const Logo = (props) => {
   return (
-    <div className={classes.Logo}>
+    // Dynamic styling by passing property
+    <div className={classes.Logo} style={{height: props.height}}>
       <img src={burgerLogo} alt="MyBurger"/>
     </div>
   );
