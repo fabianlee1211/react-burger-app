@@ -22,7 +22,7 @@ class OrderSummary extends Component {
         <p>Continue to Checkout?</p>
         <Button clicked={this.props.purchaseCancel} btnType="Danger">CANCEL</Button>
         <Button clicked={this.props.purchaseContinue} btnType="Success">CONTINUE</Button>
-        </React.Fragment>
+      </React.Fragment>
     );
   }
 }
