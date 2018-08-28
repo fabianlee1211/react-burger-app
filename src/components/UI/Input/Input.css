@@ -30,3 +30,10 @@
   border: 1px solid red;
   background-color: lightcoral;
 }
+
+.ErrorMessage {
+  font-size: 12px;
+  color: red;
+  margin: 5px 0 0 0;
+  text-align: left;
+}
