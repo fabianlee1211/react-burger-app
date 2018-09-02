@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './Input.css'
-import { options } from 'sw-toolbox';
 
 const Input = (props) => {
   let inputElement = null;
