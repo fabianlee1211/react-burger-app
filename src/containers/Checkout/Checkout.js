@@ -1,25 +1,22 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+import { connect } from 'react-redux';
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "../Checkout/ContactData/ContactData";
 
 class Checkout extends Component {
-  state = {
-    ingredients: null,
-    totalPrice: 0
-  };
 
-  componentWillMount() {
-    const query = new URLSearchParams(this.props.location.search);
-    const ingredients = {};
-    let price = 0;
-    for (let param of query.entries()) {
-      if (param[0] === "price") {
-        price = param[1];
-      } else ingredients[param[0]] = +param[1];
-    }
-    this.setState({ ingredients: ingredients, totalPrice: price });
-  }
+  // componentWillMount() {
+  //   const query = new URLSearchParams(this.props.location.search);
+  //   const ingredients = {};
+  //   let price = 0;
+  //   for (let param of query.entries()) {
+  //     if (param[0] === "price") {
+  //       price = param[1];
+  //     } else ingredients[param[0]] = +param[1];
+  //   }
+  //   this.setState({ ingredients: ingredients, totalPrice: price });
+  // }
 
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
@@ -33,23 +30,30 @@ class Checkout extends Component {
     return (
       <div>
         <CheckoutSummary
-          ingredients={this.state.ingredients}
+          ingredients={this.props.ingredients}
           checkoutCancelled={this.checkoutCancelledHandler}
           checkoutContinued={this.checkoutContinuedHandler}
         />
         <Route
           path={this.props.match.path + "/contact-data"}
-          render={(props) => (
-            <ContactData {...props}
-              ingredients={this.state.ingredients}
-              totalPrice={this.state.totalPrice}
-            />
-          )}
+          component={ContactData}
+          // render={(props) => (
+          //   <ContactData {...props}
+          //     ingredients={this.props.ingredients}
+          //     totalPrice={this.props.totalPrice}
+          //   />
+          // )}
         />
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients
+  }
+};
+
 // We can use withRouter HOC to pass router props to children
-export default Checkout;
+export default connect(mapStateToProps)(Checkout);
