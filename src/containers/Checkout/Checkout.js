@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "../Checkout/ContactData/ContactData";
+import * as actions from '../../store/actions';
 
 class Checkout extends Component {
 
@@ -18,6 +19,10 @@ class Checkout extends Component {
   //   this.setState({ ingredients: ingredients, totalPrice: price });
   // }
 
+  componentWillMount() {
+    this.props.onInitPurchase();
+  }
+
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
   };
@@ -29,8 +34,10 @@ class Checkout extends Component {
   render() {
     let summary = <Redirect to="/" />;
     if (this.props.ingredients) {
+      const purchaseRedirect = this.props.purchased ? <Redirect to="/" /> : null;
       summary = (
         <div>
+          { purchaseRedirect }
           <CheckoutSummary
             ingredients={this.props.ingredients}
             checkoutCancelled={this.checkoutCancelledHandler}
@@ -55,9 +62,16 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.burgerBuilder.ingredients
+    ingredients: state.burgerBuilder.ingredients,
+    purchased: state.order.purchased
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   }
 };
 
 // We can use withRouter HOC to pass router props to children
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

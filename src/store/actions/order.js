@@ -33,5 +33,55 @@ export const purchaseBurger = (orderData) => {
         dispatch(purchaseBurgerFail(err));
     });
   };
-} ;
+};
+
+export const purchaseInit = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT
+  };
+};
+
+export const fetchOrderSuccess = (orders) => {
+  return {
+    type: actionTypes.FETCH_ORDERS_SUCCESS,
+    orders: orders
+  };
+};
+
+export const fetchOrderFail = (error) => {
+  return {
+    type: actionTypes.FETCH_ORDERS_FAIL,
+    error: error
+  };
+};
+
+export const fetchOrderStart = () => {
+  return {
+    type: actionTypes.FETCH_ORDERS_START
+  };
+};
+
+export const fetchOrder = () => {
+  return dispatch => {
+    dispatch(fetchOrderStart());
+    axios.get('/orders.json')
+      .then((response) => {
+        const orderArray = [];
+        const orders = response.data;
+        for (let key in orders) {
+          let order = orders[key];
+          orderArray.push({ 
+            ...order, 
+            id: key 
+          });
+          // orders[key].id = key;
+          // orderArray.push(orders[key]);
+        }
+        dispatch(fetchOrderSuccess(orderArray));
+      })
+      .catch(err => {
+        dispatch(fetchOrderFail(err));
+    });
+  };
+};
 
