@@ -10,9 +10,11 @@ const initialState = {
 const purchaseInit = (state, action) => {
   return updatedObject(state, { purchased: false });
 };
+
 const purchaseBurgerStart = (state, action) => {
   return updatedObject(state, { loading: true });
 };
+
 const purchaseBurgerSuccess = (state, action) => {
   const newOrder = updatedObject(action.orderData, { id: action.orderId });
   return updatedObject(state, {
@@ -21,20 +23,28 @@ const purchaseBurgerSuccess = (state, action) => {
     orders: state.orders.concat(newOrder)
   });
 };
+
 const purchaseBurgerFail = (state, action) => {
   return updatedObject(state, { loading: false });
 };
+
 const fetchOrdersStart = (state, action) => {
   return updatedObject(state, { loading: true });
 };
+
 const fetchOrdersSuccess = (state, action) => {
   return updatedObject(state, {
     loading: false,
     orders: action.orders
   });
 };
+
 const fetchOrdersFail = (state, action) => {
   return updatedObject(state, { loading: false });
+};
+
+const deleteOrder = (state, action) => {
+  
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +56,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_ORDERS_START: return fetchOrdersStart(state, action);
     case actionTypes.FETCH_ORDERS_SUCCESS: return fetchOrdersSuccess(state, action);
     case actionTypes.FETCH_ORDERS_FAIL: return fetchOrdersFail(state, action);
+    case actionTypes.DELETE_ORDER: return deleteOrder(state, action);
     default: return state;
   }
 };
