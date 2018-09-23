@@ -96,7 +96,6 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({loading: true});
     const formData = {};
     for (let key in this.state.orderForm) {
       formData[key] = this.state.orderForm[key].value; 

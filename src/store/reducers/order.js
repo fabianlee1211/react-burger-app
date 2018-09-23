@@ -44,7 +44,7 @@ const fetchOrdersFail = (state, action) => {
 };
 
 const deleteOrder = (state, action) => {
-  
+
 };
 
 const reducer = (state = initialState, action) => {

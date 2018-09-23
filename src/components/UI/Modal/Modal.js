@@ -3,6 +3,7 @@ import Backdrop from '../Backdrop/Backdrop';
 import classes from './Modal.css';
 
 class Modal extends Component {
+  // Only re-render when modal data is different -> Performance boost
   shouldComponentUpdate (nextProps, nextState) {
     return (nextProps.show !== this.props.show || nextProps.children !== this.props.children);
   }
