@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
+import * as actions from '../../store/actions/auth';
 
 class Auth extends Component {
   state = {
@@ -37,6 +39,52 @@ class Auth extends Component {
     }
   }
 
+  submitHandler = (event) => {
+    const { email, password } = this.state.controls;
+    event.preventDefault();
+    this.props.onAuth(email.value, password.value);
+  }
+
+  checkValidity(value, rules) {
+    let isValid = true;
+
+    if (rules.required && rules !== null) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+    return isValid;
+  }
+
+  inputChangedHandler = (event, controlName) => {
+    const updatedControls = {
+      ...this.state.controls,
+      [controlName]: {
+        ...this.state.controls[controlName],
+        value: event.target.value,
+        valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+        touched: true
+      }
+    };
+    this.setState({controls: updatedControls});
+  };
+
   render() {
     const inputElements = [];
     for (let key in this.state.controls) {
@@ -61,7 +109,7 @@ class Auth extends Component {
 
     return (
       <div className={classes.Auth}>
-        <form>
+        <form onSubmit={this.submitHandler}>
           { form }
           <Button btnType="Success">Submit</Button>
         </form>
@@ -70,4 +118,16 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapStateToProps = state => {
+  return {
+
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
