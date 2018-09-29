@@ -27,6 +27,7 @@ class Orders extends Component {
 
   deleteConfirmHandler = (id) => {
     console.log('Deleting Order ID', id);
+    this.props.onDeleteOrder(id);
     this.setState({ 
       deleting: false,
       selectedOrder: null
@@ -80,7 +81,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchOrders: () => dispatch(actions.fetchOrder()),
-    // onDeleteOrder: (id) => dispatch(actions.deleteOrder(id))
+    onDeleteOrder: (id) => dispatch(actions.deleteOrder(id))
   }
 };
 

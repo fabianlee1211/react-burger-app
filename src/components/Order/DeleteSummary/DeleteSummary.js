@@ -17,7 +17,7 @@ const DeleteSummary = (props) => {
     })
   return (
     <div>
-      <h3>Delete Order</h3>
+      <h3>Delete Order {id}</h3>
       <ul>
         {ingredientSummary}
       </ul>
