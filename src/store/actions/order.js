@@ -23,9 +23,10 @@ export const purchaseBurgerStart = () => {
 };
 
 export const purchaseBurger = (orderData) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(purchaseBurgerStart());
-    axios.post('/orders.json', orderData)
+    const token = getState().auth.token;
+    axios.post('/orders.json?auth=' + token, orderData)
       .then((response) => {
         dispatch(purchaseBurgerSuccess(response.data.name, orderData));
       })
@@ -62,9 +63,11 @@ export const fetchOrderStart = () => {
 };
 
 export const fetchOrder = () => {
-  return dispatch => {
+  // Can use getState to get the state in redux store
+  return (dispatch, getState) => {
     dispatch(fetchOrderStart());
-    axios.get('/orders.json')
+    const token = getState().auth.token;
+    axios.get('/orders.json?auth=' + token)
       .then((response) => {
         const orderArray = [];
         const orders = response.data;
@@ -106,9 +109,10 @@ export const deleteOrderStart = () => {
 };
 
 export const deleteOrder = (id) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(deleteOrderStart());
-    axios.delete('/orders/'+ id + '.json')
+    const token = getState().auth.token;
+    axios.delete('/orders/'+ id + '.json?auth=' + token)
       .then((response) =>{
         if(response.status == 200) {
           console.log(`Order ID ${id} is deleted`);
