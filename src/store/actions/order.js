@@ -66,8 +66,9 @@ export const fetchOrder = () => {
   // Can use getState to get the state in redux store
   return (dispatch, getState) => {
     dispatch(fetchOrderStart());
-    const token = getState().auth.token;
-    axios.get('/orders.json?auth=' + token)
+    const { token, userId } = getState().auth;
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+    axios.get('/orders.json' + queryParams)
       .then((response) => {
         const orderArray = [];
         const orders = response.data;
