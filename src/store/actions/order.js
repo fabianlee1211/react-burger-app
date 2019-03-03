@@ -9,7 +9,7 @@ export const purchaseBurgerSuccess = (id, orderData) => {
   };
 };
 
-export const purchaseBurgerFail = (error) => {
+export const purchaseBurgerFail = error => {
   return {
     type: actionTypes.PURCHASE_BURGER_FAIL,
     error: error
@@ -22,17 +22,18 @@ export const purchaseBurgerStart = () => {
   };
 };
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = orderData => {
   return (dispatch, getState) => {
     dispatch(purchaseBurgerStart());
     const token = getState().auth.token;
-    axios.post('/orders.json?auth=' + token, orderData)
-      .then((response) => {
+    axios
+      .post('/orders.json?auth=' + token, orderData)
+      .then(response => {
         dispatch(purchaseBurgerSuccess(response.data.name, orderData));
       })
       .catch(err => {
         dispatch(purchaseBurgerFail(err));
-    });
+      });
   };
 };
 
@@ -42,14 +43,14 @@ export const purchaseInit = () => {
   };
 };
 
-export const fetchOrderSuccess = (orders) => {
+export const fetchOrderSuccess = orders => {
   return {
     type: actionTypes.FETCH_ORDERS_SUCCESS,
     orders: orders
   };
 };
 
-export const fetchOrderFail = (error) => {
+export const fetchOrderFail = error => {
   return {
     type: actionTypes.FETCH_ORDERS_FAIL,
     error: error
@@ -68,15 +69,16 @@ export const fetchOrder = () => {
     dispatch(fetchOrderStart());
     const { token, userId } = getState().auth;
     const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
-    axios.get('/orders.json' + queryParams)
-      .then((response) => {
+    axios
+      .get('/orders.json' + queryParams)
+      .then(response => {
         const orderArray = [];
         const orders = response.data;
         for (let key in orders) {
           let order = orders[key];
-          orderArray.push({ 
-            ...order, 
-            id: key 
+          orderArray.push({
+            ...order,
+            id: key
           });
           // orders[key].id = key;
           // orderArray.push(orders[key]);
@@ -85,7 +87,7 @@ export const fetchOrder = () => {
       })
       .catch(err => {
         dispatch(fetchOrderFail(err));
-    });
+      });
   };
 };
 
@@ -95,8 +97,7 @@ export const deleteOrderSuccess = () => {
   };
 };
 
-
-export const deleteOrderFail = (error) => {
+export const deleteOrderFail = error => {
   return {
     type: actionTypes.DELETE_ORDER_FAIL,
     error: error
@@ -109,22 +110,22 @@ export const deleteOrderStart = () => {
   };
 };
 
-export const deleteOrder = (id) => {
+export const deleteOrder = id => {
   return (dispatch, getState) => {
     dispatch(deleteOrderStart());
     const token = getState().auth.token;
-    axios.delete('/orders/'+ id + '.json?auth=' + token)
-      .then((response) =>{
-        if(response.status == 200) {
+    axios
+      .delete('/orders/' + id + '.json?auth=' + token)
+      .then(response => {
+        if (response.status === 200) {
           console.log(`Order ID ${id} is deleted`);
           dispatch(deleteOrderSuccess());
           dispatch(fetchOrder());
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Fail to delete');
         dispatch(deleteOrderFail(error));
       });
   };
 };
-

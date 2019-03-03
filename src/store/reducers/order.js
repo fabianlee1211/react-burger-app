@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updatedObject } from '../utility';
+import { updatedObject } from '../../utils/utility';
 
 const initialState = {
   orders: [],
@@ -56,18 +56,29 @@ const deleteOrderFail = (state, action) => {
 };
 
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
-    case actionTypes.PURCHASE_INIT: return purchaseInit(state, action);
-    case actionTypes.PURCHASE_BURGER_START: return purchaseBurgerStart(state, action);
-    case actionTypes.PURCHASE_BURGER_SUCCESS: return purchaseBurgerSuccess(state, action);
-    case actionTypes.PURCHASE_BURGER_FAIL: return purchaseBurgerFail(state, action);
-    case actionTypes.FETCH_ORDERS_START: return fetchOrdersStart(state, action);
-    case actionTypes.FETCH_ORDERS_SUCCESS: return fetchOrdersSuccess(state, action);
-    case actionTypes.FETCH_ORDERS_FAIL: return fetchOrdersFail(state, action);
-    case actionTypes.DELETE_ORDER_START: return deleteOrderStart(state, action);
-    case actionTypes.DELETE_ORDER_SUCCESS: return deleteOrderSuccess(state, action);
-    case actionTypes.DELETE_ORDER_FAIL: return deleteOrderFail(state, action);
-    default: return state;
+  switch (action.type) {
+    case actionTypes.PURCHASE_INIT:
+      return purchaseInit(state, action);
+    case actionTypes.PURCHASE_BURGER_START:
+      return purchaseBurgerStart(state, action);
+    case actionTypes.PURCHASE_BURGER_SUCCESS:
+      return purchaseBurgerSuccess(state, action);
+    case actionTypes.PURCHASE_BURGER_FAIL:
+      return purchaseBurgerFail(state, action);
+    case actionTypes.FETCH_ORDERS_START:
+      return fetchOrdersStart(state, action);
+    case actionTypes.FETCH_ORDERS_SUCCESS:
+      return fetchOrdersSuccess(state, action);
+    case actionTypes.FETCH_ORDERS_FAIL:
+      return fetchOrdersFail(state, action);
+    case actionTypes.DELETE_ORDER_START:
+      return deleteOrderStart(state, action);
+    case actionTypes.DELETE_ORDER_SUCCESS:
+      return deleteOrderSuccess(state, action);
+    case actionTypes.DELETE_ORDER_FAIL:
+      return deleteOrderFail(state, action);
+    default:
+      return state;
   }
 };
 
