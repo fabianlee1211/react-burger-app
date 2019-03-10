@@ -1,33 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from '../../components/UI/Modal/Modal';
+import useHttpErrorHandler from '../../hooks/httpErrorHandler';
 
 const withErrorHandler = (WrappedComponent, axios) => props => {
-  const [error, setError] = useState(null);
-
-  // Might be able to use useRef to declare class instance
-  // i.e. this.abc <=> const abc = useRef()
-  const reqInterceptor = axios.interceptors.request.use(req => {
-    setError(null);
-    return req;
-  });
-
-  const resInterceptor = axios.interceptors.response.use(
-    res => res,
-    err => {
-      setError(err);
-    }
-  );
-
-  useEffect(() => {
-    return () => {
-      axios.interceptors.request.eject(reqInterceptor);
-      axios.interceptors.response.eject(resInterceptor);
-    };
-  }, [reqInterceptor, resInterceptor]);
-
-  const errorConfirmedHandler = () => {
-    setError(null);
-  };
+  const [error, errorConfirmedHandler] = useHttpErrorHandler(axios);
 
   return (
     <React.Fragment>
