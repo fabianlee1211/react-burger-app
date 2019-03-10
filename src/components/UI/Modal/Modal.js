@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 import classes from './Modal.css';
 
-class Modal extends Component {
-  // Only re-render when modal data is different -> Performance boost
-  shouldComponentUpdate (nextProps, nextState) {
-    return (nextProps.show !== this.props.show || nextProps.children !== this.props.children);
-  }
+const Modal = props => {
+  useEffect(() => {}, [props.show, props.children]);
 
-  render() {
-    return (
-      <React.Fragment>
-        <Backdrop show={this.props.show} clicked={this.props.modalClosed}/>
-        <div 
-          className={classes.Modal}
-          style={{
-            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
-            opacity: this.props.show ? '1' : '0'
-          }}>
-        {this.props.children}
-        </div>
-      </React.Fragment> 
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Backdrop show={props.show} clicked={props.modalClosed} />
+      <div
+        className={classes.Modal}
+        style={{
+          transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+          opacity: props.show ? '1' : '0'
+        }}>
+        {props.children}
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default Modal;
