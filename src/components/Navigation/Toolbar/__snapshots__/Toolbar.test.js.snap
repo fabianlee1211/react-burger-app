@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toolbar /> renders Toolbar correctly 1`] = `
+<header
+  className="Toolbar"
+>
+  <DrawerToggle />
+  <div
+    className="Logo"
+  >
+    <Logo />
+  </div>
+  <nav
+    className="DesktopOnly"
+  >
+    <NavigationItems />
+  </nav>
+</header>
+`;
