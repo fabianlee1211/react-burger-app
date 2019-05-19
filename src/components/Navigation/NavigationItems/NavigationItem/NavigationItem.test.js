@@ -19,7 +19,7 @@ describe('<NavigationItem />', () => {
   it('renders NavigationItem correctly with given props', () => {
     wrapper.setProps({ link: '/home', exact: false, children: 'Hello' });
     expect(wrapper.find('NavLink').props().to).toBeDefined();
-    expect(wrapper.find('NavLink').props().exact).toBeFalsy();
+    expect(wrapper.find('NavLink').props().exact).toBe(false);
     expect(
       wrapper
         .find('NavLink')
