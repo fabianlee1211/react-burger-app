@@ -12,10 +12,11 @@ describe('<DrawerToggle />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('has 3 empty div', () => {
+  it('renders 3 empty div', () => {
     expect(wrapper.children()).toHaveLength(3);
     wrapper.children().forEach(child => {
-      expect(child.equals(<div />)).toBeTruthy();
+      expect(child.name()).toBe('div');
+      expect(child.text()).toBe('');
     });
   });
 

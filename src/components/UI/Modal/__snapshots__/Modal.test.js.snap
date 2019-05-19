@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Modal /> renders Modal correctly 1`] = `
+<Fragment>
+  <Backdrop />
+  <div
+    className="Modal"
+    style={
+      Object {
+        "opacity": "0",
+        "transform": "translateY(-100vh)",
+      }
+    }
+  />
+</Fragment>
+`;
