@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SideDrawer /> renders SideDrawer correctly 1`] = `
+<Fragment>
+  <Backdrop />
+  <div
+    className="SideDrawer Close"
+  >
+    <div
+      className="Logo"
+    >
+      <Logo />
+    </div>
+    <nav>
+      <NavigationItems />
+    </nav>
+  </div>
+</Fragment>
+`;

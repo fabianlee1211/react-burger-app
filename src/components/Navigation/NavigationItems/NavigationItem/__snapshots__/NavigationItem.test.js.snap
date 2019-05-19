@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavigationItem /> renders NavigationItem correctly 1`] = `
+<li
+  className="NavigationItem"
+>
+  <NavLink
+    activeClassName="active"
+    aria-current="page"
+    to="/"
+  />
+</li>
+`;
