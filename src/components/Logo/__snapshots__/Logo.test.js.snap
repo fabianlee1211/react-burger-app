@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Logo /> renders Logo correctly 1`] = `
+<div
+  className="Logo"
+  style={
+    Object {
+      "height": undefined,
+    }
+  }
+>
+  <img
+    alt="MyBurger"
+    src="burger-logo.png"
+  />
+</div>
+`;

@@ -15,7 +15,7 @@ export const authSuccess = (token, userId) => {
   };
 };
 
-export const authFail = (error) => {
+export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error
@@ -31,15 +31,15 @@ export const logout = () => {
   };
 };
 
-export const checkAuthTimeout = (expirationTime) => {
+export const checkAuthTimeout = expirationTime => {
   return dispatch => {
     setTimeout(() => {
-      dispatch(logout());    
+      dispatch(logout());
     }, expirationTime * 1000);
   };
 };
 
-export const setAuthRedirectPath = (path) => {
+export const setAuthRedirectPath = path => {
   return {
     type: actionTypes.SET_AUTH_REDIRECT_PATH,
     path: path
@@ -54,14 +54,19 @@ export const auth = (email, password, isSignUp) => {
       password,
       returnSecureToken: true
     };
-    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCPhgnkCiPa1rTTZd0a5Zg2HPW-PYc5LcM';
+    let url =
+      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCPhgnkCiPa1rTTZd0a5Zg2HPW-PYc5LcM';
     if (!isSignUp) {
-      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCPhgnkCiPa1rTTZd0a5Zg2HPW-PYc5LcM';
+      url =
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCPhgnkCiPa1rTTZd0a5Zg2HPW-PYc5LcM';
     }
-    axios.post(url, authData)
+    axios
+      .post(url, authData)
       .then(response => {
         console.log(response);
-        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+        const expirationDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
         localStorage.setItem('token', response.data.idToken);
         localStorage.setItem('expirationDate', expirationDate);
         localStorage.setItem('userId', response.data.localId);
@@ -72,7 +77,7 @@ export const auth = (email, password, isSignUp) => {
         console.log(error);
         dispatch(authFail(error.response.data.error));
       });
-  }
+  };
 };
 
 export const authCheckState = () => {
@@ -86,10 +91,11 @@ export const authCheckState = () => {
         dispatch(logout());
       } else {
         const userId = localStorage.getItem('userId');
-        const remainingTime = (expirationDate.getTime() - new Date().getTime()) / 1000;
+        const remainingTime =
+          (expirationDate.getTime() - new Date().getTime()) / 1000;
         dispatch(authSuccess(token, userId));
         dispatch(checkAuthTimeout(remainingTime));
       }
     }
-  }
-}
+  };
+};
